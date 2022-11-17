@@ -5,6 +5,7 @@ import com.ead.authuser.repositories.UserRepository;
 import com.ead.authuser.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 
@@ -49,8 +50,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.existsByEmail(email);
     }
 
+
     @Override
-    public Page<UserModel> findAll(Pageable pageable) {
-        return userRepository.findAll(pageable);
+    public Page<UserModel> findAll(Specification<UserModel> spec, Pageable pageable) {
+        return userRepository.findAll(spec, pageable);
     }
 }
