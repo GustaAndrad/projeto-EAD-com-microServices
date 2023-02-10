@@ -6,7 +6,6 @@ import com.ead.authuser.enums.UserType;
 import com.ead.authuser.models.UserModel;
 import com.ead.authuser.services.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.apache.coyote.Response;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
