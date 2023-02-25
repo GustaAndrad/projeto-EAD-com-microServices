@@ -24,7 +24,7 @@ public class UserModel  extends RepresentationModel<UserModel> implements Serial
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID userID;
+    private UUID userId;
 
     @Column(nullable = false, unique = true, length = 50)
     private String username;
