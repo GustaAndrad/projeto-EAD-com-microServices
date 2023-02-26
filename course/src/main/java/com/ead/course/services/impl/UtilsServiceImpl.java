@@ -19,4 +19,8 @@ public class UtilsServiceImpl implements UtilsService {
                 + "&size=" + pageable.getPageSize()
                 + "&sort=" + pageable.getSort().toString().replaceAll(": ", ",");
     }
+
+    public String createUrlOneUserById(UUID userId){
+        return REQUEST_URI_AUTHUSER + "/users/" + userId;
+    }
 }
