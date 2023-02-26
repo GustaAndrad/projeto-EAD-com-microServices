@@ -9,6 +9,8 @@ public interface UtilsService {
     String createUrlGetAllUsersByCourse(UUID courseId, Pageable pageable);
 
     String createUrlOneUserById(UUID userId);
+
+    String createUrlSubscription(UUID userId);
 }
 
 
