@@ -57,7 +57,6 @@ public class CourseUserController {
         if(courseUserService.existsByCourseAndUserId(courseModelOptional.get(), subscriptionDto.getUserId())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Subscription already exists!");
         }
-
         //Verificar se o usuario existe e se esta ativo
         try {
             responseUser = authUserClient.getOneUserById(subscriptionDto.getUserId());
