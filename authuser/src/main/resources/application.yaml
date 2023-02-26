@@ -25,3 +25,8 @@ logging:
     root: INFO
     org.springfreamework.web: DEBUG
     ogr.hibernate: INFO
+
+ead:
+  api:
+    url:
+      course: 'http://localhost:8082'

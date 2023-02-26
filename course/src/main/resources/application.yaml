@@ -26,3 +26,7 @@ logging:
     org.springfreamework.web: DEBUG
     ogr.hibernate: INFO
 
+ead:
+  api:
+    url:
+      authuser: 'http://localhost:8087'
