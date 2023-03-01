@@ -45,6 +45,7 @@ public class UserCourseController {
     @PostMapping("/users/{userId}/courses/subscription")
     public ResponseEntity<Object> saveSubscriptionUserInCourse(@PathVariable(value = "userId") UUID userId,
                                                                @RequestBody @Valid UserCourseDto userCourseDto){
+
         //Verificar se o usuario existe
         Optional<UserModel> userModelOptional = userService.findById(userId);
         if (!userModelOptional.isPresent()){

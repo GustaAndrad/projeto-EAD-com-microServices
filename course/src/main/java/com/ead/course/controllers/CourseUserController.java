@@ -53,10 +53,12 @@ public class CourseUserController {
         if (!courseModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
         }
+
         //Verificar se ja foi matriculado anteriomente
         if(courseUserService.existsByCourseAndUserId(courseModelOptional.get(), subscriptionDto.getUserId())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Subscription already exists!");
         }
+
         //Verificar se o usuario existe e se esta ativo
         try {
             responseUser = authUserClient.getOneUserById(subscriptionDto.getUserId());
