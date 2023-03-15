@@ -28,13 +28,13 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<Object> registerUser(@RequestBody @Validated(UserDto.UserView.RegistrationPost.class)
-                                                   @JsonView(UserDto.UserView.RegistrationPost.class)UserDto userDto){
+                                               @JsonView(UserDto.UserView.RegistrationPost.class) UserDto userDto) {
         log.debug("POST registerUser userDto received {}", userDto.toString());
-        if(userService.existsByUsername(userDto.getUsername())){
+        if (userService.existsByUsername(userDto.getUsername())) {
             log.warn(" Username {} is Already taken! ", userDto.getUsername());
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Username is Already taken!");
         }
-        if(userService.existsByEmail(userDto.getEmail())){
+        if (userService.existsByEmail(userDto.getEmail())) {
             log.warn(" Email {} is Already taken! ", userDto.getEmail());
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Email is Already taken!");
         }

@@ -20,18 +20,27 @@ public class SpecificationTemplate {
 
     @And({
             @Spec(path = "name", spec = Like.class),
-            @Spec(path = "courseStatus", spec = Equal.class ),
+            @Spec(path = "courseStatus", spec = Equal.class),
             @Spec(path = "courseLevel", spec = Equal.class)
     })
-    public interface CourseSpec extends Specification<CourseModel> {};
+    public interface CourseSpec extends Specification<CourseModel> {
+    }
+
+    ;
 
 
     @Spec(path = "title", spec = Like.class)
-    public interface ModuleSpec extends Specification<ModuleModel> {};
+    public interface ModuleSpec extends Specification<ModuleModel> {
+    }
+
+    ;
 
 
     @Spec(path = "title", spec = Like.class)
-    public interface LessonSpec extends Specification<LessonModel> {};
+    public interface LessonSpec extends Specification<LessonModel> {
+    }
+
+    ;
 
     public static Specification<ModuleModel> moduleCourseId(final UUID courseId) {
         return (root, query, cb) -> {

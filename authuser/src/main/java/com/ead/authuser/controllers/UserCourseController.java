@@ -36,29 +36,29 @@ public class UserCourseController {
     UserCourseService userCourseService;
 
     @GetMapping("/users/{userId}/courses")
-    public ResponseEntity<Page<CourseDto>> getAllCoursesByUser (@PageableDefault(page = 0, size = 10, sort = "courseId",
-                                                                 direction = Sort.Direction.ASC)Pageable pageable,
-                                                                @PathVariable(value = "userId") UUID userId){
+    public ResponseEntity<Page<CourseDto>> getAllCoursesByUser(@PageableDefault(page = 0, size = 10, sort = "courseId",
+            direction = Sort.Direction.ASC) Pageable pageable,
+                                                               @PathVariable(value = "userId") UUID userId) {
         return ResponseEntity.status(HttpStatus.OK).body(courseClient.getAllCoursesByUser(userId, pageable));
     }
 
     @PostMapping("/users/{userId}/courses/subscription")
     public ResponseEntity<Object> saveSubscriptionUserInCourse(@PathVariable(value = "userId") UUID userId,
-                                                               @RequestBody @Valid UserCourseDto userCourseDto){
+                                                               @RequestBody @Valid UserCourseDto userCourseDto) {
 
         //Verificar se o usuario existe
         Optional<UserModel> userModelOptional = userService.findById(userId);
-        if (!userModelOptional.isPresent()){
+        if (!userModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
 
         //Verificar se ja foi matriculado antes
-        if(userCourseService.existsByCourseAndUserId(userModelOptional.get(), userCourseDto.getCourseId())){
+        if (userCourseService.existsByCourseAndUserId(userModelOptional.get(), userCourseDto.getCourseId())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Subscription already exists!");
         }
 
         UserCourseModel userCourseModel = userCourseService.save(userModelOptional.get()
-                                                                .convertToUserCourseModel(userCourseDto.getCourseId()));
+                .convertToUserCourseModel(userCourseDto.getCourseId()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userCourseModel);
     }

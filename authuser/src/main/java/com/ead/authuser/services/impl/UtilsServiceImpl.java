@@ -13,7 +13,7 @@ public class UtilsServiceImpl implements UtilsService {
     @Value("${ead.api.url.course}")
     String REQUEST_URI_COURSE;
 
-    public String createUrlGetAllCoursesByUser(UUID userId, Pageable pageable){
+    public String createUrlGetAllCoursesByUser(UUID userId, Pageable pageable) {
         return REQUEST_URI_COURSE + "/courses?userId=" + userId
                 + "&page=" + pageable.getPageNumber()
                 + "&size=" + pageable.getPageSize()

@@ -37,10 +37,10 @@ public class CourseController {
 
 
     @PostMapping
-    public ResponseEntity<Object> saveCourse(@RequestBody CourseDto courseDto, Errors errors){
+    public ResponseEntity<Object> saveCourse(@RequestBody CourseDto courseDto, Errors errors) {
         log.debug("POST saveCourse courseDto received {} ", courseDto.toString());
         courseValidator.validate(courseDto, errors);
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.getAllErrors());
         }
         var courseModel = new CourseModel();
@@ -53,10 +53,10 @@ public class CourseController {
     }
 
     @DeleteMapping("/{courseId}")
-    public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId")UUID courseId){
+    public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId") UUID courseId) {
         log.debug("DELETE deleteCourse courseId received {} ", courseId);
         Optional<CourseModel> courseModelOptional = courseService.findById(courseId);
-        if (!courseModelOptional.isPresent()){
+        if (!courseModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
         }
         courseService.delete(courseModelOptional.get());
@@ -66,11 +66,11 @@ public class CourseController {
     }
 
     @PutMapping("/{courseId}")
-    public ResponseEntity<Object> updateCourse(@PathVariable(value = "courseId")UUID courseId,
-                                               @RequestBody @Valid CourseDto courseDto){
+    public ResponseEntity<Object> updateCourse(@PathVariable(value = "courseId") UUID courseId,
+                                               @RequestBody @Valid CourseDto courseDto) {
         log.debug("PUT updateCourse courseDto received {} ", courseDto.toString());
         Optional<CourseModel> courseModelOptional = courseService.findById(courseId);
-        if (!courseModelOptional.isPresent()){
+        if (!courseModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
         }
         var courseModel = courseModelOptional.get();
@@ -84,19 +84,19 @@ public class CourseController {
     @GetMapping
     public ResponseEntity<Page<CourseModel>> getAllCourses(SpecificationTemplate.CourseSpec spec,
                                                            @PageableDefault(page = 0, size = 10, sort = "courseId",
-                                                                   direction = Sort.Direction.ASC)Pageable pageable,
-                                                           @RequestParam(required = false) UUID userId){
-        if(userId != null){
+                                                                   direction = Sort.Direction.ASC) Pageable pageable,
+                                                           @RequestParam(required = false) UUID userId) {
+        if (userId != null) {
             return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(SpecificationTemplate
-                                                                            .courseUserId(userId).and(spec), pageable));
+                    .courseUserId(userId).and(spec), pageable));
         }
         return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(spec, pageable));
     }
 
     @GetMapping("/{courseId}")
-    public ResponseEntity<Object> getOneCourse(@PathVariable(value = "courseId")UUID courseId){
+    public ResponseEntity<Object> getOneCourse(@PathVariable(value = "courseId") UUID courseId) {
         Optional<CourseModel> courseModelOptional = courseService.findById(courseId);
-        if (!courseModelOptional.isPresent()){
+        if (!courseModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
         }
         return ResponseEntity.status(HttpStatus.OK).body(courseModelOptional.get());

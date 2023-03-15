@@ -13,14 +13,14 @@ public class UtilsServiceImpl implements UtilsService {
     @Value("${ead.api.url.authuser}")
     String REQUEST_URI_AUTHUSER;
 
-    public String createUrlGetAllUsersByCourse(UUID courseId, Pageable pageable){
+    public String createUrlGetAllUsersByCourse(UUID courseId, Pageable pageable) {
         return REQUEST_URI_AUTHUSER + "/users?courseId=" + courseId
                 + "&page=" + pageable.getPageNumber()
                 + "&size=" + pageable.getPageSize()
                 + "&sort=" + pageable.getSort().toString().replaceAll(": ", ",");
     }
 
-    public String createUrlOneUserById(UUID userId){
+    public String createUrlOneUserById(UUID userId) {
         return REQUEST_URI_AUTHUSER + "/users/" + userId;
     }
 

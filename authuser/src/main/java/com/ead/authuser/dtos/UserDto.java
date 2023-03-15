@@ -14,13 +14,19 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
 
-    public interface UserView{
-        public static interface RegistrationPost {}
-        public static interface UserPut {}
-        public static interface PasswordPut {}
-        public static interface ImagePut {}
-    }
+    public interface UserView {
+        public static interface RegistrationPost {
+        }
 
+        public static interface UserPut {
+        }
+
+        public static interface PasswordPut {
+        }
+
+        public static interface ImagePut {
+        }
+    }
 
 
     private UUID userId;

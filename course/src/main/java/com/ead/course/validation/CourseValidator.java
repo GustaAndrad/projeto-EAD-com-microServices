@@ -34,20 +34,20 @@ public class CourseValidator implements Validator {
     public void validate(Object o, Errors errors) {
         CourseDto courseDto = (CourseDto) o;
         validator.validate(courseDto, errors);
-        if(!errors.hasErrors()){
+        if (!errors.hasErrors()) {
             validateUserInstructor(courseDto.getUserInstructor(), errors);
         }
     }
 
-    private void validateUserInstructor(UUID userInstructor, Errors errors){
+    private void validateUserInstructor(UUID userInstructor, Errors errors) {
         ResponseEntity<UserDto> responseUserInstructor;
         try {
             responseUserInstructor = authUserClient.getOneUserById(userInstructor);
-            if(responseUserInstructor.getBody().getUserType().equals(UserType.STUDENT)){
+            if (responseUserInstructor.getBody().getUserType().equals(UserType.STUDENT)) {
                 errors.rejectValue("userInstructor", "UserInstructorError", "User must be Instructor or Admin");
             }
-        }catch (HttpStatusCodeException e){
-            if(e.getStatusCode().equals(HttpStatus.NOT_FOUND)){
+        } catch (HttpStatusCodeException e) {
+            if (e.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 errors.rejectValue("userInstructor", "UserInstructorError", "Instructor not found");
             }
         }

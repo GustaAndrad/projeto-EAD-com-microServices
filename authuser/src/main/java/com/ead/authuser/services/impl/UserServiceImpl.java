@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(UserModel userModel) {
         List<UserCourseModel> userCourseModelList = userCourseRepository.findAllUserCourseIntoUser(userModel.getUserId());
-        if(!userCourseModelList.isEmpty()){
+        if (!userCourseModelList.isEmpty()) {
             userCourseRepository.deleteAll(userCourseModelList);
         }
         userRepository.delete(userModel);

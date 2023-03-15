@@ -39,17 +39,17 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void delete(CourseModel courseModel) {
         List<ModuleModel> moduleModelList = moduleRepository.findAllModulesIntoCourse(courseModel.getCourseId());
-        if(!moduleModelList.isEmpty()){
-            for(ModuleModel module : moduleModelList){
+        if (!moduleModelList.isEmpty()) {
+            for (ModuleModel module : moduleModelList) {
                 List<LessonModel> lessonModelList = lessonRepository.findAllLessonsIntoModule(module.getModuleId());
-                if(!lessonModelList.isEmpty()){
+                if (!lessonModelList.isEmpty()) {
                     lessonRepository.deleteAll(lessonModelList);
                 }
             }
             moduleRepository.deleteAll(moduleModelList);
         }
         List<CourseUserModel> courseUserModelList = courseUserRepository.finAllCourseUserIntoCourse(courseModel.getCourseId());
-        if(!courseUserModelList.isEmpty()){
+        if (!courseUserModelList.isEmpty()) {
             courseUserRepository.deleteAll(courseUserModelList);
         }
         courseRepository.delete(courseModel);

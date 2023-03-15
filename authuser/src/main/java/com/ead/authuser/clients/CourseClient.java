@@ -27,18 +27,19 @@ public class CourseClient {
     @Autowired
     UtilsService utilsService;
 
-    public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable){
+    public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable) {
         List<CourseDto> searchResult = null;
         ResponseEntity<ResponsePageDto<CourseDto>> result = null;
         String url = utilsService.createUrlGetAllCoursesByUser(userId, pageable);
         log.debug("Request URL: {}", url);
         log.info("Request URL: {}", url);
-        try{
-            ParameterizedTypeReference<ResponsePageDto<CourseDto>> responseType = new ParameterizedTypeReference<ResponsePageDto<CourseDto>>(){};
+        try {
+            ParameterizedTypeReference<ResponsePageDto<CourseDto>> responseType = new ParameterizedTypeReference<ResponsePageDto<CourseDto>>() {
+            };
             result = restTemplate.exchange(url, HttpMethod.GET, null, responseType);
             searchResult = result.getBody().getContent();
             log.debug("Response Number of Elements: {}", searchResult.size());
-        }catch (HttpStatusCodeException e){
+        } catch (HttpStatusCodeException e) {
             log.error("Error request /courses {}", e);
         }
         log.info("Ending request /courses userId {}", userId);
