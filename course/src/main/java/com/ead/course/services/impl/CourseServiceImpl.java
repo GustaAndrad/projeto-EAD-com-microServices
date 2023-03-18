@@ -1,5 +1,6 @@
 package com.ead.course.services.impl;
 
+import com.ead.course.clients.AuthUserClient;
 import com.ead.course.models.CourseModel;
 import com.ead.course.models.CourseUserModel;
 import com.ead.course.models.LessonModel;
@@ -35,10 +36,18 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     CourseUserRepository courseUserRepository;
 
+    @Autowired
+    AuthUserClient authUserClient;
+
     @Transactional
     @Override
     public void delete(CourseModel courseModel) {
+
+        //Variavel para verificar se existe usuarios matriculados no curso que sera deletado.
+        boolean deleteCourseUserInAuthUser = false;
+
         List<ModuleModel> moduleModelList = moduleRepository.findAllModulesIntoCourse(courseModel.getCourseId());
+        //Verificação se existe Modules e lenssons vinculado ao curso e fazer o delete de ambos tambem
         if (!moduleModelList.isEmpty()) {
             for (ModuleModel module : moduleModelList) {
                 List<LessonModel> lessonModelList = lessonRepository.findAllLessonsIntoModule(module.getModuleId());
@@ -48,11 +57,20 @@ public class CourseServiceImpl implements CourseService {
             }
             moduleRepository.deleteAll(moduleModelList);
         }
+        // Deletar relacionamento de usuarios cadastrado no curso que sera deletado ( retirar inscrição o usuario )
         List<CourseUserModel> courseUserModelList = courseUserRepository.finAllCourseUserIntoCourse(courseModel.getCourseId());
         if (!courseUserModelList.isEmpty()) {
             courseUserRepository.deleteAll(courseUserModelList);
+            deleteCourseUserInAuthUser = true;
         }
+
+        // Depois de deletar modules, lenssons e relacionamentos de usuarios cadastrado, sera deletado o curso em si.
         courseRepository.delete(courseModel);
+
+        if(deleteCourseUserInAuthUser){
+            authUserClient.deleteCourseInAuthUser(courseModel.getCourseId());
+        }
+
     }
 
     @Override
