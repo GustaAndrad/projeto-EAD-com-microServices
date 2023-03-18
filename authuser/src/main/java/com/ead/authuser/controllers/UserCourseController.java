@@ -36,9 +36,14 @@ public class UserCourseController {
     UserCourseService userCourseService;
 
     @GetMapping("/users/{userId}/courses")
-    public ResponseEntity<Page<CourseDto>> getAllCoursesByUser(@PageableDefault(page = 0, size = 10, sort = "courseId",
+    public ResponseEntity<Object> getAllCoursesByUser(@PageableDefault(page = 0, size = 10, sort = "courseId",
             direction = Sort.Direction.ASC) Pageable pageable,
                                                                @PathVariable(value = "userId") UUID userId) {
+        //Verificar se o usuario existe
+        Optional<UserModel> userModelOptional = userService.findById(userId);
+        if (!userModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(courseClient.getAllCoursesByUser(userId, pageable));
     }
 
