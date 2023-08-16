@@ -22,6 +22,8 @@ spring:
   output:
     ansi:
       enabled: always
+  rabbitmq:
+    addresses: amqps://tchktdhm:3d-UnJ7n23wQKFFPnK2vhRoerdGrdYra@moose.rmq.cloudamqp.com/tchktdhm
 
 logging:
   level:
