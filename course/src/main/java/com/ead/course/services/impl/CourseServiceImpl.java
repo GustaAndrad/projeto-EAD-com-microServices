@@ -1,14 +1,12 @@
 package com.ead.course.services.impl;
 
-import com.ead.course.clients.AuthUserClient;
 import com.ead.course.models.CourseModel;
-import com.ead.course.models.CourseUserModel;
 import com.ead.course.models.LessonModel;
 import com.ead.course.models.ModuleModel;
 import com.ead.course.repositories.CourseRepository;
-import com.ead.course.repositories.CourseUserRepository;
 import com.ead.course.repositories.LessonRepository;
 import com.ead.course.repositories.ModuleRepository;
+import com.ead.course.repositories.UserRepository;
 import com.ead.course.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,17 +32,11 @@ public class CourseServiceImpl implements CourseService {
     LessonRepository lessonRepository;
 
     @Autowired
-    CourseUserRepository courseUserRepository;
-
-    @Autowired
-    AuthUserClient authUserClient;
+    UserRepository userRepository;
 
     @Transactional
     @Override
     public void delete(CourseModel courseModel) {
-
-        //Variavel para verificar se existe usuarios matriculados no curso que sera deletado.
-        boolean deleteCourseUserInAuthUser = false;
 
         List<ModuleModel> moduleModelList = moduleRepository.findAllModulesIntoCourse(courseModel.getCourseId());
         //Verificação se existe Modules e lenssons vinculado ao curso e fazer o delete de ambos tambem
@@ -57,20 +49,7 @@ public class CourseServiceImpl implements CourseService {
             }
             moduleRepository.deleteAll(moduleModelList);
         }
-        // Deletar relacionamento de usuarios cadastrado no curso que sera deletado ( retirar inscrição o usuario )
-        List<CourseUserModel> courseUserModelList = courseUserRepository.finAllCourseUserIntoCourse(courseModel.getCourseId());
-        if (!courseUserModelList.isEmpty()) {
-            courseUserRepository.deleteAll(courseUserModelList);
-            deleteCourseUserInAuthUser = true;
-        }
-
-        // Depois de deletar modules, lenssons e relacionamentos de usuarios cadastrado, sera deletado o curso em si.
         courseRepository.delete(courseModel);
-
-        if(deleteCourseUserInAuthUser){
-            authUserClient.deleteCourseInAuthUser(courseModel.getCourseId());
-        }
-
     }
 
     @Override
