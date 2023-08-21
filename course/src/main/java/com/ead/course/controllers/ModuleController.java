@@ -85,7 +85,7 @@ public class ModuleController {
     @GetMapping("/courses/{courseId}/modules")
     public ResponseEntity<Page<ModuleModel>> getAllModules(@PathVariable(value = "courseId") UUID courseId,
                                                            SpecificationTemplate.ModuleSpec spec,
-                                                           @PageableDefault(page = 0, size = 10, sort = "moduleId", direction = Sort.Direction.ASC)
+                                                           @PageableDefault(sort = "moduleId", direction = Sort.Direction.ASC)
                                                                    Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAllByCourse(SpecificationTemplate.moduleCourseId(courseId).and(spec), pageable));
     }

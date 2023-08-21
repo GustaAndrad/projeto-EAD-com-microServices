@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.ws.rs.core.Response;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,7 +33,7 @@ public class CourseUserController {
 
     @GetMapping("/courses/{courseId}/users")
     public ResponseEntity<Object> getAllUsersByCourse(SpecificationTemplate.UserSpec spec,
-                                                    @PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC) Pageable pageable,
+                                                    @PageableDefault(sort = "userId", direction = Sort.Direction.ASC) Pageable pageable,
                                                     @PathVariable(value = "courseId") UUID courseId) {
         //verificar se o curso existe
         Optional<CourseModel> courseModelOptional = courseService.findById(courseId);
