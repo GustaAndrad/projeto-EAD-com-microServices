@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "TB_USERS")
 public class UserModel extends RepresentationModel<UserModel> implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -32,7 +34,7 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
     @Column(nullable = false, unique = true, length = 50)
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     @JsonIgnore
     private String password;
 

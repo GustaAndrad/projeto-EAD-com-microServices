@@ -1,12 +1,10 @@
 package com.ead.authuser.services.impl;
 
-import com.ead.authuser.clients.CourseClient;
 import com.ead.authuser.enums.ActionType;
 import com.ead.authuser.models.UserModel;
 import com.ead.authuser.publishers.UserEventPublisher;
 import com.ead.authuser.repositories.UserRepository;
 import com.ead.authuser.services.UserService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +21,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    CourseClient courseClient;
 
     @Autowired
     UserEventPublisher userEventPublisher;

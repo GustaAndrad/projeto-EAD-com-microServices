@@ -28,7 +28,7 @@ public class CourseClient {
     UtilsService utilsService;
 
     public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable) {
-        List<CourseDto> searchResult = null;
+        List<CourseDto> searchResult;
         ResponseEntity<ResponsePageDto<CourseDto>> result = null;
         String url = utilsService.createUrlGetAllCoursesByUser(userId, pageable);
         log.debug("Request URL: {}", url);
