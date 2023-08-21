@@ -9,6 +9,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "TB_MODULES")
 public class ModuleModel implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
