@@ -3,7 +3,7 @@ package com.ead.authuser.clients;
 import com.ead.authuser.dtos.CourseDto;
 import com.ead.authuser.dtos.ResponsePageDto;
 import com.ead.authuser.services.UtilsService;
-import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -30,8 +30,9 @@ public class CourseClient {
     @Autowired
     UtilsService utilsService;
 
-    //Exemplo de uso do @Retry ( foi comentado pois sera usado circuit break )
-    //    @Retry(name = "retryInstance", fallbackMethod = "retryfallback")
+    //Exemplo de uso do @Retry ( foi comentado pois sera usado somente circuit break )
+    //    @Retry(name = "retryInstance", fallbackMethod = "fallbackMethod")
+    @CircuitBreaker(name = "circuitbreakerInstance")
     public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable) {
         List<CourseDto> searchResult = null;
         String url = utilsService.createUrlGetAllCoursesByUser(userId, pageable);
@@ -50,10 +51,12 @@ public class CourseClient {
         return new PageImpl<>(searchResult);
     }
 
-    //Exemplo de fallback quando se usa retry
-    public Page<CourseDto> retryfallback (UUID userId, Pageable pageable, Throwable t){
+
+    //Exemplo de metodo fallback (obrigatorio ter os mesmos parametros e retorno do metodo principal)
+    public Page<CourseDto> fallbackMethod (UUID userId, Pageable pageable, Throwable t){
         log.error("Inside retry retryfallback, cause - {}", t.toString());
         List<CourseDto> searchResult = new ArrayList<>();
         return new PageImpl<>(searchResult);
     }
+
 }
