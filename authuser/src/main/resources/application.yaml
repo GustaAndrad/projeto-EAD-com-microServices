@@ -36,7 +36,6 @@ logging:
     org.springfreamework.web: DEBUG
     ogr.hibernate: INFO
 
-
 ead:
   api:
     url:
@@ -52,3 +51,10 @@ eureka:
     enabled: true
   instance:
     hostname: localhost
+
+resilience4j:
+  retry:
+    instances:
+      retryInstance:
+        maxRetryAttempts: 3
+        waitDuration: 5s
