@@ -1,10 +1,3 @@
-#### Configs comentadas pois esta sendo utlizado config server neste projeto
-#server:
-#  port: 8082
-#  servlet:
-#    context-path: '/ead-course/'
-
-
 spring:
   application:
     name: ead-course-service
@@ -14,49 +7,3 @@ spring:
     config:
       discovery:
         serviceId: ead-config-server
-
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/ead-course-v2
-#    username: postgres
-#    password: admin
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#      dialect: org.hibernate.dialect.PostgreSQLDialect
-#      jdbc:
-#        lob.non-contextual-creation: true
-#    properties:
-#      hibernate:
-#        show_sql: true
-#  output:
-#    ansi:
-#      enabled: always
-#  rabbitmq:
-#    addresses: amqps://tchktdhm:3d-UnJ7n23wQKFFPnK2vhRoerdGrdYra@moose.rmq.cloudamqp.com/tchktdhm
-#
-#
-#logging:
-#  level:
-#    com.ead: TRACE
-#    root: INFO
-#    org.springfreamework.web: DEBUG
-#    ogr.hibernate: INFO
-#
-#ead:
-#  api:
-#    url:
-#      authuser: 'http://ead-authuser-service/ead-authuser'
-#  broker:
-#    exchange:
-#      userEventExchange: ead.userevent
-#    queue:
-#      userEventQueue:
-#        name: ead.userevent.ms.course
-#
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: 'http://localhost:8761/eureka'
-#    enabled: true
-#  instance:
-#    hostname: localhost
