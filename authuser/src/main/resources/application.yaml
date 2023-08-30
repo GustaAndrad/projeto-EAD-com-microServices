@@ -1,75 +1,77 @@
-server:
-  port: 8087
-  servlet:
-    context-path: '/ead-authuser/'
+#### Configs comentadas pois esta sendo utlizado config server neste projeto
+#server:
+#  port: 8087
+#  servlet:
+#    context-path: '/ead-authuser/'
 
 spring:
   application:
     name: ead-authuser-service
   config:
-    import: 'optional:configserver'
+    import: 'configserver'
   cloud:
     config:
       discovery:
         serviceId: ead-config-server
-  datasource:
-    url: jdbc:postgresql://localhost:5432/ead-authuser-v2
-    username: postgres
-    password: admin
-  jpa:
-    hibernate:
-      ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQLDialect
-      jdbc:
-        lob.non-contextual-creation: true
-    properties:
-      hibernate:
-        show_sql: true
-  output:
-    ansi:
-      enabled: always
-  rabbitmq:
-    addresses: amqps://tchktdhm:3d-UnJ7n23wQKFFPnK2vhRoerdGrdYra@moose.rmq.cloudamqp.com/tchktdhm
 
-logging:
-  level:
-    com:
-      netflix:
-        eureka: debug
-        discovery: debug
-    com.ead: TRACE
-    root: INFO
-    org.springfreamework.web: DEBUG
-    ogr.hibernate: INFO
-
-ead:
-  api:
-    url:
-      course: 'http://ead-course-service/ead-course'
-  broker:
-    exchange:
-      userEvent: ead.userevent
-
-eureka:
-  client:
-    serviceUrl:
-      defaulZone: 'http://localhost:8761/eureka'
-    enabled: true
-  instance:
-    hostname: localhost
-
-resilience4j:
-  circuitbreaker:
-    instances:
-      circuitbreakerInstance:
-        slidingWindowSize: 30
-        permittedNumberOfCallsInHalfOpenState: 2
-        slidingWindowType: TIME_BASED
-        minimumNumberOfCalls: 2
-        waitDurationInOpenState: 30s
-        failureRateThreshold: 80
-  retry:
-    instances:
-      retryInstance:
-        maxAttempts: 3
-        waitDuration: 5s
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/ead-authuser-v2
+#    username: postgres
+#    password: admin
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#      dialect: org.hibernate.dialect.PostgreSQLDialect
+#      jdbc:
+#        lob.non-contextual-creation: true
+#    properties:
+#      hibernate:
+#        show_sql: true
+#  output:
+#    ansi:
+#      enabled: always
+#  rabbitmq:
+#    addresses: amqps://tchktdhm:3d-UnJ7n23wQKFFPnK2vhRoerdGrdYra@moose.rmq.cloudamqp.com/tchktdhm
+#
+#logging:
+#  level:
+#    com:
+#      netflix:
+#        eureka: debug
+#        discovery: debug
+#    com.ead: TRACE
+#    root: INFO
+#    org.springfreamework.web: DEBUG
+#    ogr.hibernate: INFO
+#
+#ead:
+#  api:
+#    url:
+#      course: 'http://ead-course-service/ead-course'
+#  broker:
+#    exchange:
+#      userEvent: ead.userevent
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaulZone: 'http://localhost:8761/eureka'
+#    enabled: true
+#  instance:
+#    hostname: localhost
+#
+#resilience4j:
+#  circuitbreaker:
+#    instances:
+#      circuitbreakerInstance:
+#        slidingWindowSize: 30
+#        permittedNumberOfCallsInHalfOpenState: 2
+#        slidingWindowType: TIME_BASED
+#        minimumNumberOfCalls: 2
+#        waitDurationInOpenState: 30s
+#        failureRateThreshold: 80
+#  retry:
+#    instances:
+#      retryInstance:
+#        maxAttempts: 3
+#        waitDuration: 5s
