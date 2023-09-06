@@ -1,4 +1,4 @@
-package com.ead.authuser.configs.security;
+package com.ead.course.configs.security;
 
 import io.micrometer.core.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +21,6 @@ public class AuthenticationJwtFilter extends OncePerRequestFilter {
     @Autowired
     JwtProvider jwtProvider;
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
-
-
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest httpServletRequest,
                                     @NonNull HttpServletResponse httpServletResponse,
@@ -33,7 +29,8 @@ public class AuthenticationJwtFilter extends OncePerRequestFilter {
             String jwtStr = getTokenHeader(httpServletRequest);
             if (jwtStr != null && jwtProvider.validateJwt(jwtStr)) {
                 String userId = jwtProvider.getSubjectJwt(jwtStr);
-                UserDetails userDetails = userDetailsService.loadUserById(UUID.fromString(userId));
+                String rolesStr = jwtProvider.getClaimNameJwt(jwtStr, "roles");
+                UserDetails userDetails = UserDetailsImpl.build(UUID.fromString(userId), rolesStr);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );

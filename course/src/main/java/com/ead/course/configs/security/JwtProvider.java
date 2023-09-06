@@ -1,41 +1,30 @@
-package com.ead.authuser.configs.security;
+package com.ead.course.configs.security;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.stream.Collectors;
 
 @Log4j2
 @Component
 public class JwtProvider {
 
+
     @Value("${ead.auth.jwtSecret}")
     private String jwtSecret;
 
-    @Value("${ead.auth.jwtExpirationMs}")
-    private int jwtExpirationMs;
-
-    public String generateJwt(Authentication authentication){
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-        final String roles = userPrincipal.getAuthorities().stream().map(
-                role -> {return role.getAuthority();}
-        ).collect(Collectors.joining(","));
-        return Jwts.builder()
-                .setSubject((userPrincipal.getUserId().toString()))
-                .claim("roles", roles)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + jwtExpirationMs))
-                .signWith(SignatureAlgorithm.ES512, jwtSecret)
-                .compact();
-    }
-
     public String getSubjectJwt(String token){
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJwt(token).getBody().getSubject();
+    }
+
+    public String getClaimNameJwt(String token, String claimName){
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJwt(token).getBody().get(claimName).toString();
     }
 
     public boolean validateJwt(String authToken){
