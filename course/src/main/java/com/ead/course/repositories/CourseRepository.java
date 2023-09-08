@@ -18,7 +18,7 @@ public interface CourseRepository extends JpaRepository<CourseModel, UUID>, JpaS
     boolean existsByCourseAndUser(@Param("courseId") UUID courseId, @Param("userId") UUID userId);
 
     @Modifying
-    @Query(value = "inset into tb_courses_users values (:courseId,:userId);", nativeQuery = true)
+    @Query(value = "insert into tb_courses_users values (:courseId,:userId);", nativeQuery = true)
     void saveCourseUser(@Param("courseId") UUID courseId, @Param("userId") UUID userId);
 
     @Modifying

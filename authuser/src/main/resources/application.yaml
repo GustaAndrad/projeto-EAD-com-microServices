@@ -2,7 +2,7 @@ spring:
   application:
     name: ead-authuser-service
   config:
-    import: 'configserver'
+    import: 'configserver:'
   cloud:
     config:
       discovery:
